@@ -31,7 +31,7 @@ init:
 
 install:
     - IF EXIST c:\tools\php (SET PHP=0)
-    - curl -fsS https://windows.php.net/downloads/releases/archives/php-5.6.28-nts-Win32-VC11-x86.zip -o php.zip
+    - curl -fsS https://windows.php.net/downloads/releases/archives/%php_zip% -o php.zip
     - curl -fsS %sqlsrv%  -o sqlsrv.exe
     - 7z x php.zip -oc:\tools\php
     - 7z x sqlsrv.exe -oc:\tools\php\ext
@@ -47,10 +47,10 @@ install:
     - IF %PHP%==1 echo @php %%~dp0composer.phar %%* > composer.bat
     - curl -fsS https://getcomposer.org/composer.phar  -o composer.phar
     - cd c:\projects\phinx
-    - IF %dependencies%==lowest php composer.phar update --prefer-lowest --no-progress --profile -n
-    - IF %dependencies%==current php composer.phar install --no-progress --profile
-    - IF %dependencies%==highest php composer.phar  update --no-progress --profile -n
-    - php composer.phar composer show
+    - IF %dependencies%==lowest composer update --prefer-lowest --no-progress --profile -n
+    - IF %dependencies%==current composerinstall --no-progress --profile
+    - IF %dependencies%==highest composerupdate --no-progress --profile -n
+    - composer show
 
 test_script:
   - sqlcmd -S localhost,1433 -U sa -P Password12! -Q "create database phinxtesting;"
